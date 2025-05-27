@@ -1,0 +1,9 @@
+Admin,Admin,Administrador,Admin
+Dani Perez,Dan,Vendedor,Daniel02
+Vivian Gamboa,Gamboa,Administrador,Gamboa1
+Vivian Barrios,Barrios,Vendedor,Barrios02
+Elizabeth Lopez,Lopez,Vendedor,Lop023
+Byron Escobar,Escobar,Vendedor,Escobar2
+Leticia Gamboa,Lgamboa,Administrador,Lgamboa00
+Gabriela Lopez,Glopez,Vendedor,Glopez01
+Miguel Lemus,Mlemus,Vendedor,Mlemus00

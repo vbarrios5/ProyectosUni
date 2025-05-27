@@ -1,0 +1,456 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package com.mycompany.proyectofinal;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+/**
+ *
+ * @author vivi-barrios
+ */
+public class ConsultaUsuarios extends javax.swing.JFrame {
+        private USUARIO usuario;
+       
+    /**
+     * Creates new form ConsultaUsuarios
+     */
+    public ConsultaUsuarios() {
+        initComponents();
+        setLocationRelativeTo(this);
+        ActualizarDatos();
+               
+    }
+    
+    private void guardarUsuariosEnTXT(File archivo) {
+    try (BufferedWriter bw = new BufferedWriter(new FileWriter("Usuario.txt"))) {
+    for (USUARIO u : ProyectoFinal.usuario) {
+        // Solo guarda si no hay campos vacíos
+        if (u.getNombre() != null && !u.getNombre().isEmpty() &&
+            u.getUsuario() != null && !u.getUsuario().isEmpty() &&
+            u.getRol() != null && !u.getRol().isEmpty() &&
+            u.getPassword() != null && !u.getPassword().isEmpty()) {
+
+            bw.write(u.getNombre() + "," + u.getUsuario() + "," + u.getRol() + "," + u.getPassword());
+            bw.newLine();
+        
+    
+}
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al guardar en el archivo TXT.");
+    }
+}
+
+    
+    
+    private void ActualizarDatos(){
+        DefaultTableModel t = new DefaultTableModel(new String[]{"NOMBRE", "USUARIO", "ROL", "PASSWORD"}, ProyectoFinal.usuario.size()); 
+        //size = ayuda a devolver la cantidad (en este caso) de usuarios que hay creados por medio del arraylist (saber el tamaño del arraylilst)
+        jTable1.setModel(t);
+        TableModel tabla = jTable1.getModel();
+        
+        for (int i = 0; i < ProyectoFinal.usuario.size(); i++){
+            USUARIO u = ProyectoFinal.usuario.get(i);
+            tabla.setValueAt(u.getNombre(), i, 0);
+            tabla.setValueAt(u.getUsuario(), i, 1);
+            tabla.setValueAt(u.getRol(), i, 2);
+            tabla.setValueAt(u.getPassword(), i, 3);
+            
+        }
+    }
+    
+    private void Limpiar () {
+        nombre.setText("");
+        usuar.setText("");
+        contra.setText("");
+        
+    }
+    
+        private String getTagValue(String tag, Element element) {
+        NodeList nodeList = element.getElementsByTagName(tag);
+        if (nodeList != null && nodeList.getLength() > 0) {
+            Node node = nodeList.item(0);
+            if (node != null) {
+                return node.getTextContent().trim();
+            }
+        }
+        return "";
+    }
+
+    private void cargarDesdeXML(File archivo) {
+    try {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document doc = (Document) builder.parse(archivo);
+
+        NodeList lista = doc.getElementsByTagName("usuario");
+
+        for (int i = 0; i < lista.getLength(); i++) {
+            Node nodo = lista.item(i);
+
+            if (nodo.getNodeType() == Node.ELEMENT_NODE) {
+                Element elemento = (Element) nodo;
+                
+                
+                String nombre = getTagValue("nombre", elemento);
+                String user = getTagValue("usuario", elemento);
+                String rol = getTagValue("rol", elemento);
+                String pass = getTagValue("Password", elemento); 
+                
+
+               if (nombre != null && user != null && rol != null && pass != null &&
+                !nombre.isEmpty() && !user.isEmpty() && !rol.isEmpty() && !pass.isEmpty()) {
+
+                USUARIO u = new USUARIO();
+                u.setNombre(nombre);
+                u.setUsuario(user);
+                u.setRol(rol);
+                u.setPassword(pass);
+
+                ProyectoFinal.usuario.add(u);
+}
+               
+            }
+        }
+         ActualizarDatos();
+         
+        JOptionPane.showMessageDialog(this, "Archivo XML cargado con éxito.");
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al cargar el archivo XML.");
+    }
+}
+    
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        SALIR = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        ELIMINAR = new javax.swing.JButton();
+        MODIFICAR = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        nombre = new javax.swing.JTextField();
+        usuar = new javax.swing.JTextField();
+        contra = new javax.swing.JTextField();
+        roles = new javax.swing.JComboBox<>();
+        GUARDAR = new javax.swing.JButton();
+        CARGAR_XML = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTable1.setFont(new java.awt.Font("Liberation Sans", 0, 12)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        SALIR.setText("SALIR");
+        SALIR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SALIRActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Liberation Sans", 0, 36)); // NOI18N
+        jLabel1.setText("CONSULTA USUARIOS");
+
+        ELIMINAR.setText("ELIMINAR");
+        ELIMINAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ELIMINARActionPerformed(evt);
+            }
+        });
+
+        MODIFICAR.setText("MODIFICAR");
+        MODIFICAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MODIFICARActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("NOMBRE:");
+
+        jLabel3.setText("USUARIO:");
+
+        jLabel4.setText("PASSWORD:");
+
+        jLabel5.setText("ROL:");
+
+        roles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Vendedor", " " }));
+
+        GUARDAR.setText("GUARDAR");
+        GUARDAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GUARDARActionPerformed(evt);
+            }
+        });
+
+        CARGAR_XML.setText("CARGAR XML");
+        CARGAR_XML.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CARGAR_XMLActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(CARGAR_XML, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(MODIFICAR)
+                .addGap(18, 18, 18)
+                .addComponent(ELIMINAR)
+                .addGap(18, 18, 18)
+                .addComponent(SALIR)
+                .addGap(84, 84, 84))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(179, 179, 179)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(nombre)
+                            .addComponent(usuar)
+                            .addComponent(contra)
+                            .addComponent(roles, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(GUARDAR, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SALIR)
+                    .addComponent(ELIMINAR)
+                    .addComponent(MODIFICAR)
+                    .addComponent(CARGAR_XML))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(usuar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(contra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(roles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(GUARDAR)
+                .addContainerGap(110, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void SALIRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SALIRActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_SALIRActionPerformed
+
+    private void ELIMINARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ELIMINARActionPerformed
+        // TODO add your handling code here:
+        //JOptionPane.showMessageDialog(this, "# De Fila Seleccionada: " + jTable1.getSelectedRow());
+        int borrar = jTable1.getSelectedRow();
+        if (borrar == 0){
+            JOptionPane.showMessageDialog(this, "El ADMINISTRADOR no se puede eliminar");  
+        }else{            
+            if(JOptionPane.showConfirmDialog(this, "Esta seguro de eliminar el USUARIO?")==0){
+            ProyectoFinal.usuario.remove(borrar);
+            
+            try {
+                    ArrayList<String> lineas = new ArrayList<>();
+                    try (BufferedReader br = new BufferedReader(new FileReader("Usuario.txt"))) {
+                        String linea;
+                        while ((linea = br.readLine()) != null) {
+                            lineas.add(linea);
+                        }
+                    }
+                    
+                   if (borrar > 0 && borrar < lineas.size()) {
+                lineas.remove(borrar);
+                   }
+                    
+                    // Devuelve las filas que no se borraron
+                    try (BufferedWriter bw = new BufferedWriter(new FileWriter("Usuario.txt"))) {
+                        for (String linea : lineas) {
+                            bw.write(linea);
+                            bw.newLine();
+                        }
+                    }
+                    ActualizarDatos();
+            JOptionPane.showMessageDialog(this, "Usuario Eliminado Correctamente");
+        } catch (IOException e){
+            JOptionPane.showMessageDialog(this, "Error al eliminar al usuario");
+        }
+            } else {
+            JOptionPane.showMessageDialog(this, "Seleccione Una Fila a Borrar");
+      }      
+            
+            } 
+    }//GEN-LAST:event_ELIMINARActionPerformed
+
+    private void MODIFICARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MODIFICARActionPerformed
+        // TODO add your handling code here:
+        
+        int modificar = jTable1.getSelectedRow();
+        if (modificar == 0){
+            JOptionPane.showMessageDialog(this, "El ADMINISTRADOR no puede ser modificado");
+         } else if (modificar > 0){ 
+          usuario = ProyectoFinal.usuario.get(modificar);
+          nombre.setText(usuario.getNombre());
+          usuar.setText(usuario.getUsuario());
+          contra.setText(usuario.getPassword());
+          roles.setSelectedItem(usuario.getRol());   
+        } else {
+             JOptionPane.showMessageDialog(this, "Por favor seleccione una fila");
+         }  
+           
+       
+        
+    }//GEN-LAST:event_MODIFICARActionPerformed
+
+    private void GUARDARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GUARDARActionPerformed
+        // TODO add your handling code here:
+            if (usuario != null) {
+            
+            String UsuarioP = usuario.getUsuario();
+            
+            usuario.setNombre(nombre.getText());
+            usuario.setUsuario(usuar.getText());
+            usuario.setRol((String) roles.getSelectedItem());
+            usuario.setPassword(contra.getText());
+
+            ArrayList<String> lineas = new ArrayList<>();
+
+            try (BufferedReader br = new BufferedReader(new FileReader("Usuario.txt"))) {
+                String linea;
+                while ((linea = br.readLine()) != null) {
+                    String[] datos = linea.split(",");
+
+                    if (datos.length == 4 && datos[1].equals(UsuarioP)) {
+                        
+                        linea = usuario.getNombre() + "," + usuario.getUsuario() + "," + usuario.getRol() + "," + usuario.getPassword();
+                    }
+
+                    lineas.add(linea); 
+                }
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error al leer el archivo: " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter("Usuario.txt"))) {
+                for (String linea : lineas) {
+                    bw.write(linea);
+                    bw.newLine(); 
+                }
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error al escribir en el archivo: " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            // Actualiza la interfaz o cualquier otro componente
+            Limpiar();
+            ActualizarDatos();
+        }
+    }//GEN-LAST:event_GUARDARActionPerformed
+
+    private void CARGAR_XMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CARGAR_XMLActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+    int seleccion = fileChooser.showOpenDialog(this);
+
+    if (seleccion == JFileChooser.APPROVE_OPTION) {
+        File archivoXML = fileChooser.getSelectedFile();
+        cargarDesdeXML(archivoXML);
+    }
+    guardarUsuariosEnTXT(new File("Usuario.txt"));
+    }//GEN-LAST:event_CARGAR_XMLActionPerformed
+
+    
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton CARGAR_XML;
+    private javax.swing.JButton ELIMINAR;
+    private javax.swing.JButton GUARDAR;
+    private javax.swing.JButton MODIFICAR;
+    private javax.swing.JButton SALIR;
+    private javax.swing.JTextField contra;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField nombre;
+    private javax.swing.JComboBox<String> roles;
+    private javax.swing.JTextField usuar;
+    // End of variables declaration//GEN-END:variables
+
+
+}

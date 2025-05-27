@@ -1,0 +1,442 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package com.mycompany.proyectofinal;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+/**
+ *
+ * @author vivi-barrios
+ */
+public class ConsultaCupones extends javax.swing.JFrame {
+    private CUPONES cupones;
+
+    /**
+     * Creates new form ConsultaCupones
+     */
+    public ConsultaCupones() {
+        initComponents();
+        setLocationRelativeTo(this);
+        ActualizarTabla();
+        
+    }
+    
+    private void ActualizarTabla (){
+     String [] Encabezados = {"CODIGO DESCUENTO","PORCENTAJE","TIPO DESCUENTO","FECHA VENCIMIENTO"};
+        DefaultTableModel t = new DefaultTableModel (Encabezados, ProyectoFinal.cupones.size());
+        jTable1.setModel (t);
+        TableModel tabla = jTable1.getModel();
+        
+        for (int i = 0; i < ProyectoFinal.cupones.size(); i++){
+            CUPONES  c = ProyectoFinal.cupones.get(i);
+            tabla.setValueAt(c.getCodigoDescuento(), i, 0);
+            tabla.setValueAt(c.getDescuento(), i, 1);
+            tabla.setValueAt(c.getTipoDescuento(), i, 2);
+            tabla.setValueAt(c.getVencimiento(), i, 3);
+        }   
+    }
+    
+    private void Limpiar(){
+        codigo.setText("");
+        descuento.setText("");
+        vencimiento.setText("");
+    }
+    
+    public static void escribir (String ruta, String contenido){
+             try {
+            FileWriter archivo = new FileWriter(ruta);
+            PrintWriter escribir = new PrintWriter(archivo);
+            escribir.write(contenido);
+            escribir.close();
+            archivo.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ConsultaCupones.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static ArrayList<CUPONES> leer(String ruta){
+    
+        ArrayList<CUPONES> contenido = new ArrayList<>();
+        
+        
+        try {
+            File archivo = new File(ruta);
+            FileReader leer = new FileReader(archivo);
+            BufferedReader bloque = new BufferedReader(leer);
+            String linea = bloque.readLine();
+            while(linea !=null){
+                String[] cupon = linea.split("\\|");
+                CUPONES c = new CUPONES();
+                c.setCodigoDescuento(cupon[0].trim());
+                c.setDescuento(cupon[1].trim());
+                c.setTipoDescuento(cupon[2].trim());
+                c.setVencimiento(cupon[3].trim());
+                contenido.add(c);
+                linea = bloque.readLine();
+            }
+            leer.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ConsultaCupones.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ConsultaCupones.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        return contenido;
+        
+    }
+    
+    private void CargarArchivo (){
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos CSV", "csv"));
+
+    int seleccion = fileChooser.showOpenDialog(this);
+
+    if (seleccion == JFileChooser.APPROVE_OPTION) {
+        File archivo = fileChooser.getSelectedFile();
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+            String[] dato;
+
+            // Obtener el modelo de la tabla
+            DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+
+            // Limpiar la tabla antes de cargar nuevos datos, si es necesario
+            modelo.setRowCount(0);
+
+            while ((linea = br.readLine()) != null) {
+                dato = linea.split("\\|");
+                modelo.addRow(dato); // Agregar fila al modelo.
+                CUPONES cupon = new CUPONES();
+                ProyectoFinal.cupones.add(cupon);
+            }
+
+            JOptionPane.showMessageDialog(this, "Datos cargados exitosamente.");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error al cargar los datos del archivo: " + ex.getMessage());
+        }
+    }
+}
+
+    
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        SALIR = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        codigo = new javax.swing.JTextField();
+        descuento = new javax.swing.JTextField();
+        vencimiento = new javax.swing.JTextField();
+        TipoDescuento = new javax.swing.JComboBox<>();
+        GUARDAR_MODIF = new javax.swing.JButton();
+        ELIMINAR = new javax.swing.JButton();
+        MODIFICA = new javax.swing.JButton();
+        ARCHIVO_CSV = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Liberation Sans", 0, 36)); // NOI18N
+        jLabel1.setText("CONSULTA CUPONES");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        SALIR.setText("SALIR");
+        SALIR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SALIRActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        jLabel2.setText("CODIGO DESCUENTO:");
+
+        jLabel3.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        jLabel3.setText("DESCUENTO:");
+
+        jLabel4.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        jLabel4.setText("TIPO DESCUENTO:");
+
+        jLabel5.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        jLabel5.setText("FECHA VENCIMIENTO");
+
+        descuento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                descuentoActionPerformed(evt);
+            }
+        });
+
+        TipoDescuento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Porcentaje", "Monto Fijo", " ", " " }));
+
+        GUARDAR_MODIF.setText("GUARDAR MODIFICACION");
+        GUARDAR_MODIF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GUARDAR_MODIFActionPerformed(evt);
+            }
+        });
+
+        ELIMINAR.setText("ELIMINAR");
+        ELIMINAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ELIMINARActionPerformed(evt);
+            }
+        });
+
+        MODIFICA.setText("MODIFICAR");
+        MODIFICA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MODIFICAActionPerformed(evt);
+            }
+        });
+
+        ARCHIVO_CSV.setText("ARCHIVO CSV");
+        ARCHIVO_CSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ARCHIVO_CSVActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ARCHIVO_CSV, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(MODIFICA, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ELIMINAR, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(SALIR, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(179, 179, 179)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(codigo)
+                            .addComponent(descuento)
+                            .addComponent(vencimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TipoDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(152, 152, 152)
+                        .addComponent(GUARDAR_MODIF, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(195, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SALIR)
+                    .addComponent(ELIMINAR)
+                    .addComponent(MODIFICA)
+                    .addComponent(ARCHIVO_CSV))
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(descuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(TipoDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(vencimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addComponent(GUARDAR_MODIF)
+                .addContainerGap(39, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void SALIRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SALIRActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_SALIRActionPerformed
+
+    private void descuentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descuentoActionPerformed
+        // TODO add your handling code here: TEXTFIELDS NO USAR
+    }//GEN-LAST:event_descuentoActionPerformed
+
+    private void GUARDAR_MODIFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GUARDAR_MODIFActionPerformed
+        // TODO add your handling code here:
+        if(cupones != null){
+            
+        String Codigo = cupones.getCodigoDescuento();
+        cupones.setCodigoDescuento(codigo.getText());
+        cupones.setDescuento(descuento.getText());
+        cupones.setTipoDescuento(TipoDescuento.getSelectedItem().toString());
+        cupones.setVencimiento(vencimiento.getText());
+        
+               
+            ArrayList<String> lineas = new ArrayList<>(); 
+
+            try (BufferedReader br = new BufferedReader(new FileReader("Cupones.txt"))) {
+                String linea;
+                while ((linea = br.readLine()) != null) {
+                    String[] datos = linea.split(",");
+                    if (datos.length == 4 && datos[0].equals(Codigo)) { 
+
+                        linea = codigo.getText() + "," + descuento.getText() + "," + TipoDescuento.getSelectedItem() + "," + vencimiento.getText();
+                    }
+                    lineas.add(linea); 
+                }
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error al leer el archivo: " + e.getMessage());
+            }
+
+            // 2. Escribir de nuevo el archivo con los cambios
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter("Cupones.txt"))) {
+                for (String linea : lineas) {
+                    bw.write(linea);
+                    bw.newLine();
+                }
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error al escribir en el archivo: " + e.getMessage());
+            }
+        ActualizarTabla(); 
+        Limpiar();
+        }
+    }//GEN-LAST:event_GUARDAR_MODIFActionPerformed
+
+    private void MODIFICAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MODIFICAActionPerformed
+        // TODO add your handling code here:
+        int modificar = jTable1.getSelectedRow();
+        if (modificar >= 0){
+          try{
+          cupones = ProyectoFinal.cupones.get(modificar);
+          codigo.setText(cupones.getCodigoDescuento());
+          descuento.setText(cupones.getDescuento());
+          TipoDescuento.setSelectedItem(cupones.getTipoDescuento());
+          vencimiento.setText(cupones.getVencimiento());   
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(this, "Por favor selecciones una fila");
+        }
+        }    
+    }//GEN-LAST:event_MODIFICAActionPerformed
+
+    private void ELIMINARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ELIMINARActionPerformed
+        // TODO add your handling code here:
+        int borrar = jTable1.getSelectedRow();
+        if (borrar >= 0){
+            
+            ProyectoFinal.cupones.remove(borrar);
+          try {
+                    ArrayList<String> lineas = new ArrayList<>();
+                    try (BufferedReader br = new BufferedReader(new FileReader("Cupones.txt"))) {
+                        String linea;
+                        while ((linea = br.readLine()) != null) {
+                            lineas.add(linea);
+                        }
+                    }
+                    
+                   if (borrar > 0 && borrar < lineas.size()) {
+                lineas.remove(borrar);
+                   }
+                    
+                    try (BufferedWriter bw = new BufferedWriter(new FileWriter("Cupones.txt"))) {
+                        for (String linea : lineas) {
+                            bw.write(linea);
+                            bw.newLine();
+                            
+                        }
+                    }
+                    ActualizarTabla();
+            JOptionPane.showMessageDialog(this, "Usuario Eliminado Correctamente");
+        } catch (IOException e){
+            JOptionPane.showMessageDialog(this, "Error al eliminar al usuario");
+        }   
+        }
+              
+    }//GEN-LAST:event_ELIMINARActionPerformed
+
+    private void ARCHIVO_CSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ARCHIVO_CSVActionPerformed
+        // TODO add your handling code here:
+        CargarArchivo();
+    }//GEN-LAST:event_ARCHIVO_CSVActionPerformed
+
+ 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ARCHIVO_CSV;
+    private javax.swing.JButton ELIMINAR;
+    private javax.swing.JButton GUARDAR_MODIF;
+    private javax.swing.JButton MODIFICA;
+    private javax.swing.JButton SALIR;
+    private javax.swing.JComboBox<String> TipoDescuento;
+    private javax.swing.JTextField codigo;
+    private javax.swing.JTextField descuento;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField vencimiento;
+    // End of variables declaration//GEN-END:variables
+}
