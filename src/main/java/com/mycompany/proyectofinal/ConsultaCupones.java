@@ -206,7 +206,7 @@ public class ConsultaCupones extends javax.swing.JFrame {
             }
         });
 
-        TipoDescuento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Porcentaje", "Monto Fijo", " ", " " }));
+        TipoDescuento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "%", "Q", " " }));
 
         GUARDAR_MODIF.setText("GUARDAR MODIFICACION");
         GUARDAR_MODIF.addActionListener(new java.awt.event.ActionListener() {

@@ -79,7 +79,7 @@ public class CrearCupones extends javax.swing.JFrame {
             }
         });
 
-        TipoDescuento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Porcentaje", "Monto Fijo", " ", " " }));
+        TipoDescuento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "%", "Q" }));
 
         GUARDAR.setText("GUARDAR");
         GUARDAR.addActionListener(new java.awt.event.ActionListener() {

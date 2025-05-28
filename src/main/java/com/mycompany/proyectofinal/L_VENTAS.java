@@ -18,7 +18,8 @@ public class L_VENTAS {
     private String vendedor;
     private String IVA;
     private String total;
-    
+    private String Descuent;
+    private String TipoDesc;
     private String nombre; 
     private String NIT;
     private String Direccion; 
@@ -193,6 +194,34 @@ public class L_VENTAS {
      */
     public void setIVA(String IVA) {
         this.IVA = IVA;
+    }
+
+    /**
+     * @return the Descuent
+     */
+    public String getDescuent() {
+        return Descuent;
+    }
+
+    /**
+     * @param Descuent the Descuent to set
+     */
+    public void setDescuent(String Descuent) {
+        this.Descuent = Descuent;
+    }
+
+    /**
+     * @return the TipoDesc
+     */
+    public String getTipoDesc() {
+        return TipoDesc;
+    }
+
+    /**
+     * @param TipoDesc the TipoDesc to set
+     */
+    public void setTipoDesc(String TipoDesc) {
+        this.TipoDesc = TipoDesc;
     }
     
     
