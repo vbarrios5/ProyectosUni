@@ -35,7 +35,6 @@ public class Vent_Admon extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         CREAR = new javax.swing.JButton();
         REGRESAR = new javax.swing.JButton();
-        AGREGAR = new javax.swing.JButton();
         CREA_CUPON = new javax.swing.JButton();
         CREAR_TEL = new javax.swing.JButton();
         saludo = new javax.swing.JLabel();
@@ -73,13 +72,6 @@ public class Vent_Admon extends javax.swing.JFrame {
         REGRESAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 REGRESARActionPerformed(evt);
-            }
-        });
-
-        AGREGAR.setText("AGREGAR LIBRO INV.");
-        AGREGAR.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AGREGARActionPerformed(evt);
             }
         });
 
@@ -188,7 +180,6 @@ public class Vent_Admon extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(CREAR_TEL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(CREA_CUPON, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(AGREGAR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(CREAR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(REGRESAR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(LIBRO_STOCK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -201,14 +192,12 @@ public class Vent_Admon extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saludo, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
                 .addComponent(LIBRO_STOCK)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CREAR_TEL)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CREA_CUPON)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(AGREGAR)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CREAR)
                 .addGap(18, 18, 18)
@@ -235,12 +224,6 @@ public class Vent_Admon extends javax.swing.JFrame {
         ConsultaUsuarios c = new ConsultaUsuarios();
         c.setVisible(true);
     }//GEN-LAST:event_CONSUSUActionPerformed
-
-    private void AGREGARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AGREGARActionPerformed
-        // TODO add your handling code here:
-        CrearLIbros l = new CrearLIbros();
-        l.setVisible(true);
-    }//GEN-LAST:event_AGREGARActionPerformed
 
     private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
         // TODO add your handling code here:
@@ -285,7 +268,6 @@ public class Vent_Admon extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton AGREGAR;
     private javax.swing.JMenuItem CONSLIB;
     private javax.swing.JMenuItem CONSUSU;
     private javax.swing.JMenuItem CONS_CUPONES;

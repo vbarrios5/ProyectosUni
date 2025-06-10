@@ -1,0 +1,17 @@
+[
+{
+"titulo": "HORIZONTE PROFUNDO",
+"autor": "CARLOS LOPEZ",
+"genero": "FICCION",
+"precio": 49.60,
+"cantidad": 10
+
+  },
+  {
+    "titulo": "EL VIAJE ETERNO",
+    "autor": "ANA MARTÍNEZ",
+    "genero": "AVENTURA",
+    "precio": 55.25,
+    "cantidad": 5
+  }
+]

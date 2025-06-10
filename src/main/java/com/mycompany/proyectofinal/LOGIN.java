@@ -175,28 +175,6 @@ public class LOGIN extends javax.swing.JFrame {
         }
     }
     
-    public static void CargarDatosLibros (){
-        ProyectoFinal.libros.clear();
-        
-        try (BufferedReader br = new BufferedReader(new FileReader ("Libros.txt"))){
-            String linea;
-            while ((linea = br.readLine()) != null) {
-            String [] datos = linea.split(",");
-            if (datos.length == 5){
-                LIBROS l = new LIBROS();
-                l.titulo = datos [0];
-                l.autor = datos [1];
-                l.genero =  datos [2];
-                l.precio = Double.parseDouble(datos [3]);
-                l.cantidad= datos [4];
-                
-                ProyectoFinal.libros.add(l);
-            }
-        }
-        }catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Libro no encontrado");
-        }
-    }
     
     public static void CargarDatosLibrosVentas (){
         ProyectoFinal.CrearVentas.clear();
@@ -294,7 +272,6 @@ public class LOGIN extends javax.swing.JFrame {
         // TODO add your handling code here:
         CargarDatosTel();
         CargarDatosCupones();
-        CargarDatosLibros();
         CargarDatosLibrosVentas();
         cargarDatos();
         

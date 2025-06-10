@@ -1,0 +1,16 @@
+[
+ {
+  "titulo": "1984",
+  "autor": "GEORGE ORWELL",
+  "genero": "MISTERIO",
+  "precio": "125.25",
+  "cantidad": "10"
+ },
+ {
+  "titulo": "CIEN AÑOS DE SOLEDAD",
+  "autor": "GABRIEL GARCIA MARQUEZ",
+  "genero": "NOVELA",
+  "precio": "130",
+  "cantidad": "5"
+ }
+]

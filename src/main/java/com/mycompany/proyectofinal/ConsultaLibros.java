@@ -4,7 +4,6 @@
  */
 package com.mycompany.proyectofinal;
 
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -15,16 +14,16 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-
-
-
+import com.google.gson.Gson;
+import javax.swing.JFileChooser;
 
 /**
  *
  * @author vivi-barrios
  */
 public class ConsultaLibros extends javax.swing.JFrame {
-    private LIBROS libros;
+
+    private L_VENTAS libros;
 
     /**
      * Creates new form ConsultaLibros
@@ -33,39 +32,82 @@ public class ConsultaLibros extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
         Actualizar();
-           
-        }
-    
 
+    }
 
-    private void Actualizar(){
-         String [] Encabezado = {"TITULO","AUTOR","GENERO","PRECIO","CANTIDAD"};
-        DefaultTableModel t = new DefaultTableModel (Encabezado, ProyectoFinal.libros.size());
-        jTable1.setModel (t);
+    private void Actualizar() {
+        String[] Encabezado = {"TITULO", "AUTOR", "GENERO", "PRECIO", "CANTIDAD"};
+        DefaultTableModel t = new DefaultTableModel(Encabezado, ProyectoFinal.librosVentas.size());
+        jTable1.setModel(t);
         TableModel tabla = jTable1.getModel();
-        
+
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(275); // TITULO 
         jTable1.getColumnModel().getColumn(3).setPreferredWidth(10); // PRECIO
         jTable1.getColumnModel().getColumn(4).setPreferredWidth(10); // CANTIDAD 
-        
-        for (int i = 0; i < ProyectoFinal.libros.size(); i++){
-            LIBROS l = ProyectoFinal.libros.get(i);
-            tabla.setValueAt(l.titulo, i, 0);
-            tabla.setValueAt(l.autor, i, 1);
-            tabla.setValueAt(l.genero, i, 2);
-            tabla.setValueAt(l.precio, i, 3);
-            tabla.setValueAt(l.cantidad, i, 4);
+
+        for (int i = 0; i < ProyectoFinal.librosVentas.size(); i++) {
+            L_VENTAS l = ProyectoFinal.librosVentas.get(i);
+            tabla.setValueAt(l.getTitulo(), i, 0);
+            tabla.setValueAt(l.getAutor(), i, 1);
+            tabla.setValueAt(l.getGenero(), i, 2);
+            tabla.setValueAt(l.getPrecio(), i, 3);
+            tabla.setValueAt(l.getCantidad(), i, 4);
+        }
     }
-    }
-    
-    private void Limpiar(){
+
+    private void Limpiar() {
         tit.setText("");
         gen.setText("");
         autores.setText("");
         cant.setText("");
         precios.setText("");
     }
-    
+
+    private void ArchivoJson() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Selecciona un archivo JSON");
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Archivos JSON", "json"));
+
+        int seleccion = fileChooser.showOpenDialog(this);
+
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            File archivoSeleccionado = fileChooser.getSelectedFile();
+
+            try (FileReader reader = new FileReader(archivoSeleccionado)) {
+                Gson gson = new Gson();
+
+                ArrayList<L_VENTAS> nuevosLibros = gson.fromJson(
+                        reader,
+                        new com.google.gson.reflect.TypeToken<ArrayList<L_VENTAS>>() {
+                        }.getType()
+                );
+
+                if (nuevosLibros != null) {
+                    ProyectoFinal.librosVentas.addAll(nuevosLibros); 
+                    JOptionPane.showMessageDialog(this, "Libros Agregados");
+                    
+                    FileWriter fw = new FileWriter("LibrosVentas.txt", true);
+                    BufferedWriter bw = new BufferedWriter(fw);
+
+                for (L_VENTAS l : nuevosLibros) {
+                    String linea = l.getTitulo() + "," + l.getAutor() + "," + l.getGenero() + "," + l.getPrecio() + "," + l.getCantidad();
+                    bw.write(linea);
+                    bw.newLine();
+                }
+
+                bw.close(); 
+                }
+
+                Actualizar();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error al cargar libros");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Carga cancelada.");
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -275,108 +317,104 @@ public class ConsultaLibros extends javax.swing.JFrame {
     private void ELIMINARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ELIMINARActionPerformed
         // TODO add your handling code here:
         int borrar = jTable1.getSelectedRow();
-        if (borrar >= 0){
-            
-            ProyectoFinal.libros.remove(borrar);
-          try {
-                    ArrayList<String> lineas = new ArrayList<>();
-                    try (BufferedReader br = new BufferedReader(new FileReader("Libros.txt"))) {
-                        String linea;
-                        while ((linea = br.readLine()) != null) {
-                            lineas.add(linea);
-                        }
+        if (borrar >= 0) {
+
+            ProyectoFinal.librosVentas.remove(borrar);
+            try {
+                ArrayList<String> lineas = new ArrayList<>();
+                try (BufferedReader br = new BufferedReader(new FileReader("LibrosVentas.txt"))) {
+                    String linea;
+                    while ((linea = br.readLine()) != null) {
+                        lineas.add(linea);
                     }
-                    
-                    Actualizar();
-                    
-                   if (borrar > 0 && borrar < lineas.size()) {
-                lineas.remove(borrar);
-                   }
-                    
-                    try (BufferedWriter bw = new BufferedWriter(new FileWriter("Libros.txt"))) {
-                        for (String linea : lineas) {
-                            bw.write(linea);
-                            bw.newLine();
-                        }
+                }
+
+                Actualizar();
+
+                if (borrar > 0 && borrar < lineas.size()) {
+                    lineas.remove(borrar);
+                }
+
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter("LibrosVentas.txt"))) {
+                    for (String linea : lineas) {
+                        bw.write(linea);
+                        bw.newLine();
                     }
-            JOptionPane.showMessageDialog(this, "Usuario Eliminado Correctamente");
-        } catch (IOException e){
-            JOptionPane.showMessageDialog(this, "Error al eliminar al usuario");
-        }   
+                }
+                JOptionPane.showMessageDialog(this, "Usuario Eliminado Correctamente");
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error al eliminar al usuario");
+            }
         }
     }//GEN-LAST:event_ELIMINARActionPerformed
 
     private void MODIFICARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MODIFICARActionPerformed
         // TODO add your handling code here:
         int modificar = jTable1.getSelectedRow();
-        if (modificar >= 0){
-          try{
-          libros = ProyectoFinal.libros.get(modificar);
-          tit.setText(libros.titulo);
-          gen.setText(libros.genero);
-          autores.setText(libros.autor);
-          cant.setText(libros.cantidad);
-          precios.setText(String.valueOf(libros.precio));
-          
-         
-          
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(this, "Por favor selecciones una fila");
+        if (modificar >= 0) {
+            try {
+                libros = ProyectoFinal.librosVentas.get(modificar);
+                tit.setText(libros.getTipoDesc());
+                gen.setText(libros.getGenero());
+                autores.setText(libros.getAutor());
+                cant.setText(libros.getCantidad());
+                precios.setText(String.valueOf(libros.getPrecio()));
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Por favor selecciones una fila");
+            }
         }
-        }
-       
+
     }//GEN-LAST:event_MODIFICARActionPerformed
 
     private void GUARDARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GUARDARActionPerformed
         // TODO add your handling code here:
-        if(libros != null){
-            
-        String Titulo = libros.titulo;
-        libros.titulo = tit.getText();
-        libros.autor = autores.getText();
-        libros.genero = gen.getText();
-        libros.cantidad = String.valueOf(cant.getText());
-        libros.precio = Double.parseDouble(precios.getText());
-        
-                File archivo = new File("Libros.txt");
-           ArrayList<String> lineas = new ArrayList<>(); 
+        if (libros != null) {
 
-           try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
-               String linea;
-               while ((linea = br.readLine()) != null) {
-                   String[] datos = linea.split(",");
-                   if (datos.length == 5 && datos[0].equals(Titulo)){ 
-                           linea = tit.getText() + "," + autores.getText() + "," + gen.getText() + "," + precios.getText() + "," + cant.getText();
+            String Titulo = libros.getTitulo();
+            libros.setTitulo(tit.getText());
+            libros.setAutor(autores.getText());
+            libros.setGenero(gen.getText());
+            libros.setCantidad(String.valueOf(cant.getText()));
+            libros.setPrecio(Double.parseDouble(precios.getText()));
 
-                   }
-                   lineas.add(linea); 
-               }
-           } catch (IOException e) {
-               JOptionPane.showMessageDialog(this, "Error al leer el archivo: " + e.getMessage());
-           }
+            File archivo = new File("LibrosVentas.txt");
+            ArrayList<String> lineas = new ArrayList<>();
 
-           // 2. Escribir de nuevo el archivo con los cambios
-           try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
-               for (String linea : lineas) {
-                   bw.write(linea);
-                   bw.newLine();
-               }
-           } catch (IOException e) {
-               JOptionPane.showMessageDialog(this, "Error al escribir en el archivo: " + e.getMessage());
-           }
-        
-        Limpiar();
-        Actualizar();
+            try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+                String linea;
+                while ((linea = br.readLine()) != null) {
+                    String[] datos = linea.split(",");
+                    if (datos.length == 5 && datos[0].equals(Titulo)) {
+                        linea = libros.getTitulo() + "," + libros.getAutor() + "," + libros.getGenero() + "," + libros.getPrecio() + "," + libros.getCantidad();
+
+                    }
+                    lineas.add(linea);
+                }
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error al leer el archivo: " + e.getMessage());
+            }
+
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
+                for (String linea : lineas) {
+                    bw.write(linea);
+                    bw.newLine();
+                }
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error al escribir en el archivo: " + e.getMessage());
+            }
+
+            Limpiar();
+            Actualizar();
 
         }
     }//GEN-LAST:event_GUARDARActionPerformed
 
     private void ARCHIVO_JSONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ARCHIVO_JSONActionPerformed
         // TODO add your handling code here:
-        
+        ArchivoJson();
     }//GEN-LAST:event_ARCHIVO_JSONActionPerformed
 
- 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ARCHIVO_JSON;

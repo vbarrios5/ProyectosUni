@@ -18,7 +18,6 @@ public class ProyectoFinal {
     public static ArrayList <USUARIO> usuario = new ArrayList <> (); 
     public static USUARIO usuarios;
     public static String nombreVendedor;
-    public static ArrayList <LIBROS > libros = new ArrayList <> ();
     public static ArrayList <CUPONES > cupones = new ArrayList <> ();
     public static ArrayList <TELEFONO> telefonos = new ArrayList<>(); 
     public static ArrayList <L_VENTAS> librosVentas = new ArrayList<>(); 

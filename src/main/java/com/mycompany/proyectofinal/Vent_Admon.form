@@ -151,7 +151,6 @@
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="CREAR_TEL" max="32767" attributes="0"/>
                           <Component id="CREA_CUPON" alignment="0" max="32767" attributes="0"/>
-                          <Component id="AGREGAR" alignment="0" max="32767" attributes="0"/>
                           <Component id="CREAR" alignment="0" max="32767" attributes="0"/>
                           <Component id="REGRESAR" alignment="0" max="32767" attributes="0"/>
                           <Component id="LIBRO_STOCK" max="32767" attributes="0"/>
@@ -169,14 +168,12 @@
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="saludo" min="-2" pref="67" max="-2" attributes="0"/>
-              <EmptySpace pref="100" max="32767" attributes="0"/>
+              <EmptySpace pref="136" max="32767" attributes="0"/>
               <Component id="LIBRO_STOCK" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="CREAR_TEL" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="CREA_CUPON" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="AGREGAR" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="CREAR" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -210,14 +207,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="REGRESARActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="AGREGAR">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="AGREGAR LIBRO INV."/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AGREGARActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="CREA_CUPON">
