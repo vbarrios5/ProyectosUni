@@ -224,6 +224,7 @@ public class CrearLibrosVentas extends javax.swing.JFrame {
         li.setCantidad(cant.getText());
         
         ProyectoFinal.librosVentas.add(li);
+        ProyectoFinal.guardarDatos(); 
         
         try (BufferedWriter bw = new BufferedWriter (new FileWriter("LibrosVentas.txt",true))){
             bw.write(li.getTitulo() + "," + li.getAutor() + "," + li.getGenero() + "," + li.getPrecio() + "," + li.getCantidad());

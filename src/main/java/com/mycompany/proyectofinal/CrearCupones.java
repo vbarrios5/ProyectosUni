@@ -172,6 +172,7 @@ public class CrearCupones extends javax.swing.JFrame {
             c.setVencimiento(vencimiento.getText());
             
             ProyectoFinal.cupones.add(c);
+            ProyectoFinal.guardarDatos(); 
             
             try (BufferedWriter bw = new BufferedWriter (new FileWriter ("Cupones.txt", true))){
                 bw.write(c.getCodigoDescuento() + "," + c.getDescuento() + "," + c.getTipoDescuento() + "," + c.getVencimiento());

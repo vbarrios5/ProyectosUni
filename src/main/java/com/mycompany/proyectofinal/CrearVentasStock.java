@@ -461,7 +461,7 @@ public class CrearVentasStock extends javax.swing.JFrame {
                         actualizarArchivoInventario();
                     } else {
                         JOptionPane.showMessageDialog(this, "Stock insuficiente. Solo hay " + stockCantidad + " unidades.");
-                        return; // Salir sin registrar la venta
+                        return; 
                     }
                 }
             }
@@ -486,6 +486,7 @@ public class CrearVentasStock extends javax.swing.JFrame {
             v.setTotalSinDesc(totalVentas1.getText());
 
             ProyectoFinal.CrearVentas.add(v);
+            ProyectoFinal.guardarDatos(); 
             Limpiar();
             CargarTabla();
 
@@ -518,6 +519,7 @@ public class CrearVentasStock extends javax.swing.JFrame {
             v.setTotalSinDesc(totalVentas1.getText());
 
             ProyectoFinal.CrearVentasAdmin.add(v);
+            ProyectoFinal.guardarDatos(); 
             JOptionPane.showMessageDialog(this, "GRACIAS POR VALIDAR "
                     + "SU VENTA");
 
@@ -550,6 +552,7 @@ public class CrearVentasStock extends javax.swing.JFrame {
             }
 
             ProyectoFinal.VentasDetalladas.add(detalle);
+            ProyectoFinal.guardarDatos(); 
         }
 
     }//GEN-LAST:event_VALIDAR_VENTAActionPerformed

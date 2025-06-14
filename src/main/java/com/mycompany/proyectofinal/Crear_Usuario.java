@@ -195,7 +195,8 @@ public class Crear_Usuario extends javax.swing.JFrame {
         u.setRol((String)roles.getSelectedItem()); 
         u.setPassword(password.getText());
         
-        ProyectoFinal.usuario.add(u);   
+        ProyectoFinal.usuario.add(u);  
+        ProyectoFinal.guardarDatos(); 
         
         try (BufferedWriter bw = new BufferedWriter (new FileWriter("Usuario.txt", true))){
                 bw.write(u.getNombre() + "," + u.getUsuario() + "," + u.getRol() + "," + u.getPassword());

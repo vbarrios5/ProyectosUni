@@ -4,11 +4,13 @@
  */
 package com.mycompany.proyectofinal;
 
+import java.io.Serializable;
+
 /**
  *
  * @author vivi-barrios
  */
-public class Direcciones {
+public class Direcciones implements Serializable {
     private String Calle;
     private String Avenida;
     private String DireCompleta;

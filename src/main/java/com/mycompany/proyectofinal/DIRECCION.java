@@ -204,6 +204,7 @@ public class DIRECCION extends javax.swing.JFrame {
         
         JOptionPane.showMessageDialog(this, "Direccion Agregada");
         ProyectoFinal.direccion.add(d);
+        ProyectoFinal.guardarDatos(); 
         CargarTabla();
     }//GEN-LAST:event_GUARDAR_DIRECCIONActionPerformed
 

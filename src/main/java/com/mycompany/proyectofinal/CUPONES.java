@@ -4,11 +4,13 @@
  */
 package com.mycompany.proyectofinal;
 
+import java.io.Serializable;
+
 /**
  *
  * @author vivi-barrios
  */
-public class CUPONES {
+public class CUPONES implements Serializable {
     
     /**
      * @return the CodigoDescuento

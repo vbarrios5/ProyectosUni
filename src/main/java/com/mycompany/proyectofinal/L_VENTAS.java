@@ -4,11 +4,13 @@
  */
 package com.mycompany.proyectofinal;
 
+import java.io.Serializable;
+
 /**
  *
  * @author vivi-barrios
  */
-public class L_VENTAS {
+public class L_VENTAS implements Serializable {
     private String titulo;
     private String autor;
     private String genero;

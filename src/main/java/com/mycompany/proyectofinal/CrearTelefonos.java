@@ -218,6 +218,7 @@ public class CrearTelefonos extends javax.swing.JFrame {
             t.setNumero(NUMERO.getText());
             
             ProyectoFinal.telefonos.add(t);
+            ProyectoFinal.guardarDatos(); 
             
             try (BufferedWriter bw = new BufferedWriter (new FileWriter ("Telefono.txt", true))){
                 bw.write(t.getCodigo() + "," + t.getNumero());

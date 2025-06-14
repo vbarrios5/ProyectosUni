@@ -263,6 +263,8 @@ public class LOGIN extends javax.swing.JFrame {
         
     }
     
+    
+    
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
         // TODO add your handling code here:
         this.dispose();
