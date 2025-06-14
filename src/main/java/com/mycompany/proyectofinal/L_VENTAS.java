@@ -23,6 +23,8 @@ public class L_VENTAS {
     private String nombre; 
     private String NIT;
     private String Direccion; 
+    private String VentasDet;
+    private String TotalSinDesc;
     
     
     
@@ -222,6 +224,34 @@ public class L_VENTAS {
      */
     public void setTipoDesc(String TipoDesc) {
         this.TipoDesc = TipoDesc;
+    }
+
+    /**
+     * @return the VentasDet
+     */
+    public String getVentasDet() {
+        return VentasDet;
+    }
+
+    /**
+     * @param VentasDet the VentasDet to set
+     */
+    public void setVentasDet(String VentasDet) {
+        this.VentasDet = VentasDet;
+    }
+
+    /**
+     * @return the TotalSinDesc
+     */
+    public String getTotalSinDesc() {
+        return TotalSinDesc;
+    }
+
+    /**
+     * @param TotalSinDesc the TotalSinDesc to set
+     */
+    public void setTotalSinDesc(String TotalSinDesc) {
+        this.TotalSinDesc = TotalSinDesc;
     }
     
     

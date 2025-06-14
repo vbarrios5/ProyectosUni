@@ -22,7 +22,8 @@ public class ProyectoFinal {
     public static ArrayList <TELEFONO> telefonos = new ArrayList<>(); 
     public static ArrayList <L_VENTAS> librosVentas = new ArrayList<>(); 
     public static ArrayList <L_VENTAS> CrearVentas = new ArrayList<>(); 
-    public static ArrayList <L_VENTAS> CrearVentasAdmin = new ArrayList<>(); 
+    public static ArrayList <L_VENTAS> CrearVentasAdmin = new ArrayList<>();
+    public static ArrayList <L_VENTAS> VentasDetalladas = new ArrayList<>();
     public static ArrayList <Direcciones> direccion = new ArrayList<>(); 
     
     
